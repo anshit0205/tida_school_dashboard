@@ -69,22 +69,36 @@ try:
 except Exception as e:
     st.error(f"❌ Secrets ERROR: {e}")
     st.write("Secrets object:", st.secrets)
+import os
+
+# ================== DATABASE CONFIG ==================
 # ================== DATABASE CONFIG ==================
 try:
-    DB_USER = st.secrets["database"]["DB_USER"]
-    DB_PASS = st.secrets["database"]["DB_PASS"]
-    DB_HOST = st.secrets["database"]["DB_HOST"]
-    DB_PORT = st.secrets["database"]["DB_PORT"]
-    DB_NAME = st.secrets["database"]["DB_NAME"]
-    TABLE_NAME = st.secrets["database"]["TABLE_NAME"]
-    
-    st.success(f"✅ Loaded secrets - Connecting to: {DB_HOST}:{DB_PORT}/{DB_NAME}")
-    
-except KeyError as e:
-    st.error(f"❌ Missing secret key: {e}")
-    st.stop()
-except Exception as e:
-    st.error(f"❌ Error loading secrets: {e}")
+    # Try Streamlit secrets first (for local development)
+    if "database" in st.secrets:
+        DB_USER = st.secrets["database"]["DB_USER"]
+        DB_PASS = st.secrets["database"]["DB_PASS"]
+        DB_HOST = st.secrets["database"]["DB_HOST"]
+        DB_PORT = str(st.secrets["database"]["DB_PORT"])
+        DB_NAME = st.secrets["database"]["DB_NAME"]
+        TABLE_NAME = st.secrets["database"]["TABLE_NAME"]
+        st.success("✅ Using Streamlit secrets")
+    else:
+        raise KeyError("No secrets found")
+        
+except (KeyError, FileNotFoundError):
+    # Use environment variables (for Railway deployment)
+    DB_USER = os.getenv("DB_USER", "streamlit_user")
+    DB_PASS = os.getenv("DB_PASS")
+    DB_HOST = os.getenv("DB_HOST")
+    DB_PORT = str(os.getenv("DB_PORT", "58323"))
+    DB_NAME = os.getenv("DB_NAME", "railway")
+    TABLE_NAME = os.getenv("TABLE_NAME", "data_final_slim")
+    st.success("✅ Using Railway environment variables")
+
+# Validate that we have all required credentials
+if not all([DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME, TABLE_NAME]):
+    st.error("❌ Missing database credentials!")
     st.stop()
 
 @st.cache_resource
