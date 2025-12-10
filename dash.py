@@ -65,6 +65,7 @@ try:
     st.write("- DB_HOST:", st.secrets["database"]["DB_HOST"])
     st.write("- DB_PORT:", st.secrets["database"]["DB_PORT"])
     st.write("- DB_NAME:", st.secrets["database"]["DB_NAME"])
+    st.write("- DB_USER:", st.secrets["database"]["DB_USER"])
     st.write("✅ Secrets loaded successfully!")
 except Exception as e:
     st.error(f"❌ Secrets ERROR: {e}")
