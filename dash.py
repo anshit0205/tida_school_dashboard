@@ -57,7 +57,18 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+# ================== DEBUG INFO ==================
+st.write("🔍 **Debug Information:**")
+st.write("Checking secrets...")
 
+try:
+    st.write("- DB_HOST:", st.secrets["database"]["DB_HOST"])
+    st.write("- DB_PORT:", st.secrets["database"]["DB_PORT"])
+    st.write("- DB_NAME:", st.secrets["database"]["DB_NAME"])
+    st.write("✅ Secrets loaded successfully!")
+except Exception as e:
+    st.error(f"❌ Secrets ERROR: {e}")
+    st.write("Secrets object:", st.secrets)
 # ================== DATABASE CONFIG ==================
 # Load from Streamlit secrets (for cloud) or use defaults (for local)
 try:
