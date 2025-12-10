@@ -59,12 +59,23 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ================== DATABASE CONFIG ==================
-DB_USER = "root"
-DB_PASS = "anshitdassdA2"
-DB_HOST = "127.0.0.1"
-DB_PORT = "3307"
-DB_NAME = "tida"
-TABLE_NAME = "data_final_slim"
+# Load from Streamlit secrets (for cloud) or use defaults (for local)
+try:
+    DB_USER = st.secrets["database"]["DB_USER"]
+    DB_PASS = st.secrets["database"]["DB_PASS"]
+    DB_HOST = st.secrets["database"]["DB_HOST"]
+    DB_PORT = st.secrets["database"]["DB_PORT"]
+    DB_NAME = st.secrets["database"]["DB_NAME"]
+    TABLE_NAME = st.secrets["database"]["TABLE_NAME"]
+except:
+    # Fallback for local development
+    st.warning("⚠️ Using local database configuration. Set up secrets for production.")
+    DB_USER = "root"
+    DB_PASS = "anshitdassdA2"
+    DB_HOST = "127.0.0.1"
+    DB_PORT = "3307"
+    DB_NAME = "tida"
+    TABLE_NAME = "data_final_slim"
 
 @st.cache_resource
 def get_db_engine():
