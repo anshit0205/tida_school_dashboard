@@ -104,13 +104,6 @@ if not all([DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME, TABLE_NAME]):
     st.stop()
     
 st.success(f"✅ Loaded secrets - Connecting to: {DB_HOST}:{DB_PORT}/{DB_NAME}")
-    
-except KeyError as e:
-    st.error(f"❌ Missing secret key: {e}")
-    st.stop()
-except Exception as e:
-    st.error(f"❌ Error loading secrets: {e}")
-    st.stop()
 
 @st.cache_resource
 def get_db_engine():
