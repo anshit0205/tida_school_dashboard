@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import re
 from sqlalchemy import create_engine
 from urllib.parse import quote_plus
-
+import os
 # ================== PAGE CONFIG ==================
 st.set_page_config(page_title="Sports Academy Analytics", layout="wide", page_icon="⚽")
 
