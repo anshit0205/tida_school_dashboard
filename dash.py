@@ -67,15 +67,13 @@ try:
     DB_PORT = st.secrets["database"]["DB_PORT"]
     DB_NAME = st.secrets["database"]["DB_NAME"]
     TABLE_NAME = st.secrets["database"]["TABLE_NAME"]
-except:
-    # Fallback for local development
-    st.warning("⚠️ Using local database configuration. Set up secrets for production.")
-    DB_USER = "root"
-    DB_PASS = "anshitdassdA2"
-    DB_HOST = "127.0.0.1"
-    DB_PORT = "3307"
-    DB_NAME = "tida"
-    TABLE_NAME = "data_final_slim"
+except KeyError as e:
+    st.error(f"❌ Secrets not found! Missing key: {e}")
+    st.error("Please add database secrets in Streamlit Cloud settings!")
+    st.stop()
+except Exception as e:
+    st.error(f"❌ Error loading secrets: {e}")
+    st.stop()
 
 @st.cache_resource
 def get_db_engine():
