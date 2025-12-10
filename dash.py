@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from urllib.parse import quote_plus
 import os
 # ================== PAGE CONFIG ==================
-st.set_page_config(page_title="Sports Academy Analytics", layout="wide", page_icon="⚽")
+st.set_page_config(page_title="Tida Sports Academy Analytics", layout="wide", page_icon="⚽")
 
 # Custom CSS
 st.markdown("""
@@ -57,19 +57,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-# ================== DEBUG INFO ==================
-st.write("🔍 **Debug Information:**")
-st.write("Checking secrets...")
-
-try:
-    st.write("- DB_HOST:", st.secrets["database"]["DB_HOST"])
-    st.write("- DB_PORT:", st.secrets["database"]["DB_PORT"])
-    st.write("- DB_NAME:", st.secrets["database"]["DB_NAME"])
-    st.write("- DB_USER:", st.secrets["database"]["DB_USER"])
-    st.write("✅ Secrets loaded successfully!")
-except Exception as e:
-    st.error(f"❌ Secrets ERROR: {e}")
-    st.write("Secrets object:", st.secrets)
 # ================== DATABASE CONFIG ==================
 import os
 
@@ -97,7 +84,7 @@ except (KeyError, FileNotFoundError):
     st.success("✅ Using environment variables")
 
 # ADD THIS DEBUG LINE
-st.write(f"🔍 DEBUG - DB_USER being used: **{DB_USER}**")
+#st.write(f"🔍 DEBUG - DB_USER being used: **{DB_USER}**")
 
 # Validate credentials
 if not all([DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME, TABLE_NAME]):
