@@ -97,7 +97,6 @@ st.success(f"✅ Loaded secrets - Connecting to: {DB_HOST}:{DB_PORT}/{DB_NAME}")
 def get_db_engine():
     """Create database connection engine"""
     ENGINE_URL = f"mysql+pymysql://{DB_USER}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    #st.write(f"🔗 Connection string: mysql+pymysql://{DB_USER}:****@{DB_HOST}:{DB_PORT}/{DB_NAME}")
     return create_engine(ENGINE_URL)
 
 # ================== HELPER FUNCTIONS ==================
