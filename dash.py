@@ -378,8 +378,8 @@ def load_data_from_db():
         return None
 
 # ================== MAIN APP ==================
-st.title("⚽ Sports Academy Analytics Dashboard")
-st.markdown("#### Revenue, Renewals & Retention Overview")
+st.title("⚽ Tida Sports Academy Analytics Dashboard-- School Version")
+#st.markdown("#### Revenue, Renewals & Retention Overview")
 
 with st.spinner('🔄 Loading data from database...'):
     df = load_data_from_db()
