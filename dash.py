@@ -70,7 +70,6 @@ except Exception as e:
     st.error(f"❌ Secrets ERROR: {e}")
     st.write("Secrets object:", st.secrets)
 # ================== DATABASE CONFIG ==================
-# Load from Streamlit secrets (for cloud) or use defaults (for local)
 try:
     DB_USER = st.secrets["database"]["DB_USER"]
     DB_PASS = st.secrets["database"]["DB_PASS"]
@@ -78,9 +77,11 @@ try:
     DB_PORT = st.secrets["database"]["DB_PORT"]
     DB_NAME = st.secrets["database"]["DB_NAME"]
     TABLE_NAME = st.secrets["database"]["TABLE_NAME"]
+    
+    st.success(f"✅ Loaded secrets - Connecting to: {DB_HOST}:{DB_PORT}/{DB_NAME}")
+    
 except KeyError as e:
-    st.error(f"❌ Secrets not found! Missing key: {e}")
-    st.error("Please add database secrets in Streamlit Cloud settings!")
+    st.error(f"❌ Missing secret key: {e}")
     st.stop()
 except Exception as e:
     st.error(f"❌ Error loading secrets: {e}")
@@ -90,6 +91,7 @@ except Exception as e:
 def get_db_engine():
     """Create database connection engine"""
     ENGINE_URL = f"mysql+pymysql://{DB_USER}:{quote_plus(DB_PASS)}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    st.write(f"🔗 Connection string: mysql+pymysql://{DB_USER}:****@{DB_HOST}:{DB_PORT}/{DB_NAME}")
     return create_engine(ENGINE_URL)
 
 # ================== HELPER FUNCTIONS ==================
